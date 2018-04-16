@@ -1,0 +1,36 @@
+The idea behind this script is simple: when the CPU temperature
+exceeds a threshold, throttle the CPU frequency to prevent over-
+heating, even when all hardware cooling measures have been
+activated. Once the CPU reaches a "cool enough" point, the CPU
+frequency limit is gradually allowed to go higher.
+
+This design allows for short bursts of high CPU load, which may
+raise the temperature, without reaching the a dangerous level.
+Sustained, high CPU load (e.g. a long compile) is the case of
+concern for this script.
+
+There are two thresholds, $HOT and $COOL. You may set these as
+you wish (in degrees Celsius, to match the Linux kernel); I use
+65 and 50 deg C.
+
+When the system is idle, the temperature is below $COOL, and the
+maximum CPU speed is whatever the hardware limits allow. In
+order to minimize the script's effect on CPU load, it sleeps for
+20 seconds in between temperature checks.
+
+Under load, once the CPU temperature exceeds $COOL (in other
+words, the CPU is "warm"), the script sleeps for only 5 seconds
+instead, in a more "alert, watchful" state.
+
+If the load remains high, and the CPU temperature exceeds $HOT,
+the script reduces the maximum CPU frequency by one step, sleeps
+5 seconds, then re-checks the temperature. If it's still hot,
+it drops the maximum frequency another step, again and again
+until the CPU temperature is less than $HOT. This way, a long-
+winded process might run slower, but the hardware is afforded
+some protection against thermal breakdown, *even on systems
+with no built-in frequency throttling!*
+
+NOTE: I have taken no steps to secure this script. Since this
+script requires root privileges to write to files under /sys,
+you are assuming any and all risks by using it.
