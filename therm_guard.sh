@@ -2,7 +2,7 @@
 
 # therm_guard.sh by gus3
 # This shell script file is in the public domain, as all
-# interpreted sripts should be.
+# interpreted scripts should be.
 
 # gov files
 GOVDIR=/sys/devices/system/cpu/cpufreq/policy0
